@@ -13,11 +13,11 @@ description = """All requests require a header in the following format: {'Author
 
 JWT Payload structure:
 
-    deliveryman_id: internal ID
+    user_id: internal ID
     expires: the expiration time of the JWT
-    admin: True or False (used for certain endpoints) not necessary"""
+    admin: True or False (used for certain endpoints)"""
 
-app = FastAPI(title="Deliveryman API", description=description)
+app = FastAPI(title="Market API", description=description)
 app.include_router(deliveryman.router, prefix="/deliveryman", tags=["deliveryman"])
 
 app.add_middleware(

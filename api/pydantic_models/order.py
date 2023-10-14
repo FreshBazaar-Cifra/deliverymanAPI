@@ -2,8 +2,6 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, field_validator
 from pydantic.types import Decimal
-from pydantic_models.address import DeliveryAddress
-from pydantic_models.place import DeliveryMarketModel
 
 
 class DeliverymanModel(BaseModel):
@@ -43,12 +41,14 @@ class PromocodeCheckOut(BaseModel):
 class OrderModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
+    id: int
     date: str
     status: str
+    deliveryman: DeliverymanModel | None = None
     price: float
     delivery_price: float
-    market: DeliveryMarketModel
-    address: DeliveryAddress
+    promocode: PromocodeModel | None = None
+    total: float
 
     @field_validator('date', mode='before')
     @classmethod

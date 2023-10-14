@@ -5,9 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import relationship
 from models.deliveryman import Deliveryman
 from models.address import Address
-from models.market import Market
 from sqlalchemy import text
-from sqlalchemy import or_, and_
+from fastapi import Response
 
 from models.db_session import SqlAlchemyBase as Base
 
@@ -29,8 +28,6 @@ class Order(Base):
     total = Column(Numeric(11, 2), nullable=False)
     address_id = Column(Integer, ForeignKey("addresses.id"))
     address = relationship("Address", lazy="selectin")
-    market_id = Column(Integer, ForeignKey("markets.id"))
-    market = relationship("Market", lazy="selectin")
 
     @classmethod
     async def get_orders_by_user(cls, user_id: int, session: AsyncSession):
@@ -86,7 +83,7 @@ class Order(Base):
         :rtype: Order
         """
 
-        _ = await session.execute(select(cls).join(Address, cls.address_id==Address.id).join(Deliveryman, Deliveryman.id == deliveryman_id).where(or_(and_(cls.id == order_id, cls.status == "paid", Address.city == Deliveryman.city), and_(cls.deliveryman_id == deliveryman_id, cls.id == order_id))))
+        _ = await session.execute(select(cls).join(Address, cls.address_id==Address.id).join(Deliveryman, Deliveryman.id == deliveryman_id).where(((cls.id == order_id) & (cls.status == "paid") & (Address.city == Deliveryman.city)) | (cls.deliveryman_id == deliveryman_id)))
         return _.scalar()
     
     @classmethod

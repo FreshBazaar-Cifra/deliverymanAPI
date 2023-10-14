@@ -17,17 +17,6 @@ class MarketModel(BaseModel):
     latitude: Decimal
     longitude: Decimal
 
-class DeliveryMarketModel(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    name: str
-    city: str
-    street: str | None = None
-    district: str | None = None
-    house: str
-    latitude: Decimal
-    longitude: Decimal
-
 
 class WorkingHourModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
