@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
       context: api/
     ports:
-      - "8000:80"
+      - "8001:80"
     depends_on:
       - db
     env_file:
