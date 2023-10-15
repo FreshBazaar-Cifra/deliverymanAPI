@@ -1,7 +1,6 @@
 from contextlib import asynccontextmanager
 from functools import wraps
 from os import environ
-from data import config
 
 from fastapi import Request
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
@@ -21,8 +20,8 @@ def get_database_url(alembic: bool = False) -> str:
     if alembic:
         schema = "postgresql"
 
-    return (f"{schema}://{config.db_login}:{config.db_password}@"
-            f"{config.db_host}:{config.db_port}/{config.db_name}")
+    return (f"{schema}://{env('db_login')}:{env('db_password')}@"
+            f"{env('db_host')}:{env('db_port')}/{env('db_name')}")
 
 
 async def global_init():
@@ -31,7 +30,6 @@ async def global_init():
     if __factory:
         return
     conn_str = get_database_url()
-    print(conn_str)
 
     engine = create_async_engine(conn_str, pool_pre_ping=True)
 

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, select
+from sqlalchemy import Column, String, Integer, select, Numeric
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from models.db_session import SqlAlchemyBase as Base
@@ -12,3 +12,6 @@ class Address(Base):
     home = Column(String, nullable=False)
     entrance = Column(String)
     apartment = Column(String)
+    intercom = Column(String)
+    latitude = Column(Numeric(9, 6), nullable=False)
+    longitude = Column(Numeric(9, 6), nullable=False)

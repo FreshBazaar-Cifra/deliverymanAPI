@@ -13,9 +13,11 @@ class Product(Base):
     place_id = Column(Integer, ForeignKey("places.id"))
     place = relationship("Place", lazy="selectin")
     description = Column(String)
-    images = Column(ARRAY(String))
-    name = Column(String)
+    images = Column(ARRAY(String), nullable=False)
+    name = Column(String, nullable=False)
     price = Column(Numeric(10, 2), nullable=False)
+    weight = Column(Integer, nullable=False)
+    category_id = Column(Integer, ForeignKey("categories.id"))
     attributes = relationship("Attribute", lazy="selectin")
 
     @classmethod
@@ -55,5 +57,8 @@ class Attribute(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     key = Column(String)
     value = Column(String)
-    product_id = Column(Integer, ForeignKey("products.id"))
+    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
+
+
+
 

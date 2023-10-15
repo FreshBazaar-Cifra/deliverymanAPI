@@ -7,6 +7,6 @@ class Promocode(Base):
     __tablename__ = 'promocodes'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    sale = Column(SmallInteger)
-    count = Column(Integer)
-    code = Column(String)
+    sale = Column(SmallInteger, nullable=False)
+    count = Column(Integer, nullable=False)
+    code = Column(String, nullable=False)

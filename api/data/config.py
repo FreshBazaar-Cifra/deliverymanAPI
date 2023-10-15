@@ -4,13 +4,7 @@ from os import getenv
 # load_dotenv()
 
 
-JWT_SECRET = "bFqZgGHQHlSPwmRIZODaIrlwvMyYuaWdnWfZzPwQfOGuGScpyjHeNCWMArvsPHrzhgbZcuFFWCAXvehRSrvAxWyHwfDXsvqiRHZduPbmaaqFypoiWHukcvJqCBaYvYyzULUnbIpqXamcSnxEecdCwArCnkcOYsDznFVXXwQEldTQzpDiANKNzzpNEEZMdiETbFhvnvJYqRybizIENJCtEoegfCaixvkYhtTfliYTXlocOmMCGennwBSZmb"
-JWT_ALGORITHM = "HS256"
+JWT_SECRET = getenv("jwt_secret")
+JWT_ALGORITHM = getenv("jwt_algorithm")
 
-HASH_SALT = "IRxCARXqKDPJJISQjxxZZdTpNbWsOIOSMjqOZdSRHVOSnxcNmMIzyPvmTJnPqZQyJYbcpnTTnNuTsVeHoDNbOOQeXkGzxfDNbnbe"
-
-db_host = "localhost"
-db_port = "5432"
-db_name = "market"
-db_login = "postgres"
-db_password = "1234"
+HASH_SALT = getenv("hash_salt")

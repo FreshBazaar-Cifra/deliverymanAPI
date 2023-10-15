@@ -8,3 +8,6 @@ from .promo import Promocode
 from .user import User
 from .working_hour import WorkingHour
 from .address import Address
+from .balance import Balance
+from .transaction import Transaction
+from .category import Category

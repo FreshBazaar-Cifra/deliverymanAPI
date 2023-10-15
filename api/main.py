@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 
-from routes import deliveryman
+from routes import deliveryman, orders, balance
 
 from models.db_session import global_init, create_session
 
@@ -13,12 +13,14 @@ description = """All requests require a header in the following format: {'Author
 
 JWT Payload structure:
 
-    user_id: internal ID
+    deliveryman_id: internal ID
     expires: the expiration time of the JWT
-    admin: True or False (used for certain endpoints)"""
+    admin: True or False (used for certain endpoints) not necessary"""
 
-app = FastAPI(title="Market API", description=description)
+app = FastAPI(title="Deliveryman API", description=description)
 app.include_router(deliveryman.router, prefix="/deliveryman", tags=["deliveryman"])
+app.include_router(orders.router, prefix="/orders", tags=["orders"])
+app.include_router(balance.router, prefix="/balance", tags=["balance"])
 
 app.add_middleware(
     CORSMiddleware,
