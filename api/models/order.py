@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, Integer, String, DateTime, Numeric, ForeignKey, select, update
+from sqlalchemy import Column, Integer, String, DateTime, Numeric, ForeignKey, select, Table
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import relationship
 from models.deliveryman import Deliveryman
@@ -12,12 +12,21 @@ from sqlalchemy import or_, and_
 from models.db_session import SqlAlchemyBase as Base
 
 
+
+orders_to_positions = Table(
+    "orders_to_positions",
+    Base.metadata,
+    Column("order_id", ForeignKey("orders.id")),
+    Column("position_id", ForeignKey("positions.id")),
+)
+
+
 class Order(Base):
     __tablename__ = 'orders'
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User", lazy="selectin")
-    positions = relationship("Position", lazy="selectin")
+    positions = relationship("Position", secondary=orders_to_positions, lazy="selectin")
     date = Column(DateTime, default=datetime.datetime.now, nullable=False)
     status = Column(String, default="created", nullable=False)
     deliveryman_id = Column(Integer, ForeignKey("deliverymen.id"))
